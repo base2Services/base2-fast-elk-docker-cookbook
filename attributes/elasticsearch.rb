@@ -5,6 +5,7 @@ default['base2-fast-elk-docker']['elasticsearch']['discovery']['aws'] = true
 default['base2-fast-elk-docker']['elasticsearch']['discovery']['role'] = 'search'
 default['base2-fast-elk-docker']['elasticsearch']['discovery']['role_name'] = 'Role'
 
-default['base2-fast-elk-docker']['elasticsearch']['plugins'] = [ 'lmenezes/elasticsearch-kopf',
-                                                                  'cloud-aws'
-                                                                ]
+default['base2-fast-elk-docker']['elasticsearch']['plugins'] =
+    [ 'lmenezes/elasticsearch-kopf',
+      'cloud-aws'
+    ]

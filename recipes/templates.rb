@@ -4,7 +4,11 @@
   end
 end
 
-template "/var/config/logstash/logstash.conf"
+%w{ logstash.conf } do
+  template "/var/config/logstash/#{template}" do
+    source "logstash/#{template}"
+  end
+end
 
 %w{elasticsearch.yml docker-entrypoint.sh}.each do | template |
   template "/var/config/elasticsearch/#{template}" do
