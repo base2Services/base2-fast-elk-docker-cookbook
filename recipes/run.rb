@@ -20,6 +20,11 @@ docker_container 'elasticsearch' do
     "/var/config/elasticsearch/elasticsearch.yml:/etc/elasticsearch/elasticsearch.yml",
     "/var/config/elasticsearch/docker-entrypoint.sh:/entrypoint.sh"
   ]
+  log_driver = "json-file"
+  log_opts "max-size=1g" #log_opts ["max-size=1g", "max-file=2", "labels=label1,label2", "env=evn1,env2"]
+  detach true
+  restart_policy 'always'
+  action ["redeploy"]
 end
 
 docker_container 'logstash' do
@@ -28,6 +33,11 @@ docker_container 'logstash' do
   volumes [ '/var/config/logstash:/etc/logstash/conf.d' ]
   port [ '5000:5000' ]
   links [ 'elasticsearch:elasticsearch' ]
+  log_driver = "json-file"
+  log_opts "max-size=1g" #log_opts ["max-size=1g", "max-file=2", "labels=label1,label2", "env=evn1,env2"]
+  detach true
+  restart_policy 'always'
+  action ["redeploy"]
 end
 
 docker_container 'kibana' do
@@ -35,4 +45,9 @@ docker_container 'kibana' do
   port [ '5601:5601' ]
   links [ 'elasticsearch:elasticsearch' ]
   env [ 'ELASTICSEARCH_URL=http://elasticsearch:9200' ]
+  log_driver = "json-file"
+  log_opts "max-size=1g" #log_opts ["max-size=1g", "max-file=2", "labels=label1,label2", "env=evn1,env2"]
+  detach true
+  restart_policy 'always'
+  action ["redeploy"]
 end
