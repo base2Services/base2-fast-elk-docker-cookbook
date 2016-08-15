@@ -1,2 +1,4 @@
-# base2-fast-elk-docker-cookbook
-Cookbook to deploy an ELK instance with docker containers
+# base2-fast-elk-docker
+
+TODO: Enter the cookbook description here.
+

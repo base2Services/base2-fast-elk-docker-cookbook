@@ -1,0 +1,30 @@
+# #!/bin/bash
+#
+# set -e
+#
+# # Add elasticsearch as command if needed
+# if [ "${1:0:1}" = '-' ]; then
+# 	set -- elasticsearch "$@"
+# fi
+#
+# # Drop root privileges if we are running elasticsearch
+# # allow the container to be started with `--user`
+# if [ "$1" = 'elasticsearch' -a "$(id -u)" = '0' ]; then
+# 	# Change the ownership of /usr/share/elasticsearch/data to elasticsearch
+# 	chown -R elasticsearch:elasticsearch /usr/share/elasticsearch/data
+#
+# 	set -- gosu elasticsearch "$@"
+# 	#exec gosu elasticsearch "$BASH_SOURCE" "$@"
+# fi
+#
+# # As argument is not related to elasticsearch,
+# # then assume that user wants to run his own process,
+# # for example a `bash` shell to explore this image
+# exec "$@"
+chown -R elasticsearch:elasticsearch /usr/share/elasticsearch/data
+<% node['base2-fast-elk-docker']['elasticsearch']['plugins'].each do | plugin | %>
+/usr/share/elasticsearch/bin/plugin install <%= plugin %> -b
+<% end %>
+#DAEMON_OPTS=" -De --default.path.home=$ES_HOME --default.path.logs=$LOG_DIR --default.path.data=$DATA_DIR --default.path.conf=$CONF_DIR"
+#elasticsearch ${DAEMON_OPTS}
+elasticsearch
