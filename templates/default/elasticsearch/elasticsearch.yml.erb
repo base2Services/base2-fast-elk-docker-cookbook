@@ -126,7 +126,7 @@ gateway.recover_after_nodes: 1
 gateway.recover_after_time: 2m
 gateway.expected_nodes: 1
 discovery.zen.ping.multicast.enabled: false
-cloud.aws.region: <%= ['base2-fast-elk-docker']['aws']['region'] %>
+cloud.aws.region: <%= node['base2-fast-elk-docker']['aws']['region'] %>
 <% if node['base2-fast-elk-docker']['elasticsearch']['discovery']['aws'] %>
 #needs "ec2:DescribeInstances" and "ec2:DescribeTags"
 discovery.type: ec2
