@@ -4,7 +4,7 @@
   end
 end
 
-%w{ logstash.conf } do
+%w{ logstash.conf }.each do
   template "/var/config/logstash/#{template}" do
     source "logstash/#{template}"
   end
