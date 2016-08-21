@@ -51,18 +51,3 @@ docker_container 'kibana' do
   restart_policy 'always'
   action ["redeploy"]
 end
-
-node['base2-fast-elk-docker']['elasticsearch']['plugins'].each do | plugin |
-  command = %w{gosu elasticsearch /usr/share/elasticsearch/bin/plugin install}
-  command << plugin
-  command << "-b"
-  log command
-  docker_exec 'plugin' do
-    container 'elasticsearch'
-    command command
-  end
-end
-
-docker_container "elasticsearch" do
-  action :restart
-end
