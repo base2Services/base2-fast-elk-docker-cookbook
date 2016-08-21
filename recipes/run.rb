@@ -59,7 +59,7 @@ node['base2-fast-elk-docker']['elasticsearch']['plugins'].each do | plugin |
   log command
   docker_exec 'plugin' do
     container 'elasticsearch'
-    command %w{gosu elasticsearch /usr/share/elasticsearch/bin/plugin install} << plugin << "-b"
+    command command
   end
 end
 
