@@ -51,3 +51,8 @@ docker_container 'kibana' do
   restart_policy 'always'
   action ["redeploy"]
 end
+
+
+#TODO:
+#kibana: apt-get update && apt-get install apache2-utils  && htpasswd -b -c /etc/nginx/htpasswd.users kibanaadmin daihatsudomino
+#logrotate

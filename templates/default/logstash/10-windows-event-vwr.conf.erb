@@ -1,0 +1,26 @@
+input {
+    tcp {
+        type => "WindowsEventLog"
+        port => <%= node['base2-fast-elk-docker']['logstash']['win_event_port'] %>
+        codec => "line"
+    }
+}
+
+filter{
+    if [type] == "WindowsEventLog" {
+        json{
+            source => "message"
+        }
+        ruby {
+            code => "event['EventType'] = event['Severity']"
+        }
+        if [SourceModuleName] == "eventlog" {
+            mutate {
+                replace => [ "message", "%{Message}" ]
+            }
+            mutate {
+                remove_field => [ "Message" ]
+            }
+        }
+    }
+}
