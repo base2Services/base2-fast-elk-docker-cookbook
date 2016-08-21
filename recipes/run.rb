@@ -13,7 +13,7 @@ docker_container 'elasticsearch' do
   command '/entrypoint.sh'
   port [ '9200:9200', '9300:9300']
   env [
-    "ES_HEAP_SIZE=#{node['base2-fast-elk-docker']['es']['heapsize']}"
+    "ES_HEAP_SIZE=#{node['base2-fast-elk-docker']['elasticsearch']['heapsize']}"
   ]
   volumes [
     "/data/elasticsearch:/usr/share/elasticsearch/data",
