@@ -53,7 +53,9 @@ docker_container 'kibana' do
 end
 
 node['base2-fast-elk-docker']['elasticsearch']['plugins'].each do | plugin |
-  command = %w{gosu elasticsearch /usr/share/elasticsearch/bin/plugin install} << plugin << "-b"
+  command = %w{gosu elasticsearch /usr/share/elasticsearch/bin/plugin install}
+  command << plugin
+  command << "-b"
   log command
   docker_exec 'plugin' do
     container 'elasticsearch'
