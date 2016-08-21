@@ -27,6 +27,19 @@ docker_container 'elasticsearch' do
   action ["redeploy"]
 end
 
+
+execute "date >> /root/install_log"
+
+node['base2-fast-elk-docker']['elasticsearch']['plugins'].each do | plugin |
+  command = "docker exec -it elasticsearch gosu elasticsearch /usr/share/elasticsearch/bin/plugin install #{plugin} -b  2>&1 | tee -a /root/install_log"
+
+  execute 'install #{plugin}' do
+    command command
+  end
+end
+
+execute "docker restart elasticsearch"
+
 docker_container 'logstash' do
   tag 'latest'
   command 'logstash -f /etc/logstash/conf.d/logstash.conf'
@@ -50,19 +63,4 @@ docker_container 'kibana' do
   detach true
   restart_policy 'always'
   action ["redeploy"]
-end
-
-node['base2-fast-elk-docker']['elasticsearch']['plugins'].each do | plugin |
-  command = %w{gosu elasticsearch /usr/share/elasticsearch/bin/plugin install}
-  command << plugin
-  command << "-b"
-  log command
-  docker_exec 'plugin' do
-    container 'elasticsearch'
-    command command
-  end
-end
-
-docker_container "elasticsearch" do
-  action :restart
 end
