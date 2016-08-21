@@ -16,6 +16,6 @@ end
   end
 end
 
-file "/var/config/elasticsearch/#{template}" do
+file "/var/config/elasticsearch/docker-entrypoint.sh" do
   mode '0755'
 end
