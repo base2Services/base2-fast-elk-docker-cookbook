@@ -51,3 +51,7 @@ docker_container 'kibana' do
   restart_policy 'always'
   action ["redeploy"]
 end
+
+#<% node['base2-fast-elk-docker']['elasticsearch']['plugins'].each do | plugin | %>
+#/usr/share/elasticsearch/bin/plugin install <%= plugin %> -b
+#<% end %>
