@@ -4,7 +4,7 @@
   end
 end
 
-%w{ 01-input.conf 10-windows-event-vwr.conf 10-iis.conf 99-output.conf 99-logstash.conf }.each do | template|
+%w{ 01-input.conf 10-windows-event-vwr.conf 10-iis.conf 99-logstash.conf }.each do | template|
   template "/var/config/logstash/#{template}" do
     source "logstash/#{template}.erb"
   end
