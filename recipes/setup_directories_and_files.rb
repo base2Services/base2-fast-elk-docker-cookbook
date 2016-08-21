@@ -15,3 +15,7 @@ end
     source "elasticsearch/#{template}.erb"
   end
 end
+
+file "/var/config/elasticsearch/#{template}" do
+  mode '0755'
+end
