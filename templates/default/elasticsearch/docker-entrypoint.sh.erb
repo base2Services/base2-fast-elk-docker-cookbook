@@ -23,6 +23,12 @@
 # exec "$@"
 chown -R elasticsearch:elasticsearch /usr/share/elasticsearch/data
 
+<% node['base2-fast-elk-docker']['elasticsearch']['plugins'].each do | plugin | %>
+/usr/share/elasticsearch/bin/plugin install <%= plugin %> -b 2>&1 | tee -a /usr/share/elasticsearch/plugin_install_log
+<% end %>
+
+set -e
+
 #DAEMON_OPTS=" -De --default.path.home=$ES_HOME --default.path.logs=$LOG_DIR --default.path.data=$DATA_DIR --default.path.conf=$CONF_DIR"
 #elasticsearch ${DAEMON_OPTS}
 gosu elasticsearch elasticsearch ${DAEMON_OPTS}
