@@ -65,7 +65,7 @@ docker_container 'nginx' do
   tag 'latest'
   port [ '80:80' ]
   links [ 'kibana:kibana' ]
-  volumes [ "/var/config/nginx/nginx.conf:/etc/nginx/nginx.conf" ]
+  volumes [ "/var/config/nginx/nginx.conf:/etc/nginx/conf.d/default.conf" ]
   log_driver = "json-file"
   log_opts "max-size=1g" #log_opts ["max-size=1g", "max-file=2", "labels=label1,label2", "env=evn1,env2"]
   detach true
