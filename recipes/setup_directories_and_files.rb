@@ -23,3 +23,16 @@ end
 template "/var/config/nginx/nginx.conf" do
   source "nginx/nginx.conf.erb"
 end
+
+case node['platform_family']
+when 'debian'
+  package 'apache2-utils'
+when 'rhel'
+  package 'httpd-tools'
+end
+
+#refactor here for passwd
+kibana_password = "daihatsudomino"
+execute "mk passwd" do
+  command "sudo htpasswd -c /var/conf/nginx/htpasswd.users kibanaadmin #{kibana_password}"
+end
