@@ -7,7 +7,7 @@ end
 %w{nginx kibana logstash elasticsearch}.each do | container |
   execute "clear linked containers" do
     command <<-EOF
-      docker ps -a | grep -q #{containers} && docker rm -f #{container} || echo #{container} not there
+      docker ps -a | grep -q #{container} && docker rm -f #{container} || echo #{container} not there
     EOF
   end
 end
