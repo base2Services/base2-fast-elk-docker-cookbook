@@ -34,5 +34,5 @@ end
 #refactor here for passwd
 kibana_password = "daihatsudomino"
 execute "mk passwd" do
-  command "sudo htpasswd -b -c /var/conf/nginx/htpasswd.users kibanaadmin #{kibana_password}"
+  command "sudo htpasswd -b -c /var/config/nginx/htpasswd.users kibanaadmin #{kibana_password}"
 end
