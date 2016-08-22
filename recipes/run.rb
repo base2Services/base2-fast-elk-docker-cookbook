@@ -1,3 +1,5 @@
+#ensure this is created - but if you know what is good for you then...
+#create and mount this from a persistent volume
 directory node['base2-fast-elk-docker']['elasticsearch']['data_path'] do
   recursive true
 end
