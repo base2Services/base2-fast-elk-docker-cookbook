@@ -24,10 +24,10 @@
 chown -R elasticsearch:elasticsearch /usr/share/elasticsearch/data
 
 <% node['base2-fast-elk-docker']['elasticsearch']['plugins'].each do | plugin | %>
-/usr/share/elasticsearch/bin/plugin install <%= plugin %> -b 2>&1 | tee -a /usr/share/elasticsearch/plugin_install_log
+gosu elasticsearch /usr/share/elasticsearch/bin/plugin install <%= plugin %> -b 2>&1 | tee -a /usr/share/elasticsearch/plugin_install_log
 <% end %>
 
-sudo bin/plugin list 2>&1 | tee -a /usr/share/elasticsearch/plugin_install_log
+gosu elasticsearch /usr/share/elasticsearch/bin/plugin list 2>&1 | tee -a /usr/share/elasticsearch/plugin_install_log
 
 set -e
 

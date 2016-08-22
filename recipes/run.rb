@@ -7,9 +7,10 @@ execute "clear linked containers" do
     docker ps -a | grep -q kibana && docker rm -f kibana
     docker ps -a | grep -q logstash && docker rm -f logstash
     docker ps -a | grep -q elasticsearch && docker rm -f elasticsearch
+    docker ps -a | grep -q nginx && docker rm -f nginx
   EOF
 end
-  
+
 # export ES_HEAP_SIZE
 # export ES_HEAP_NEWSIZE
 # export ES_DIRECT_SIZE
@@ -59,6 +60,17 @@ docker_container 'kibana' do
   action ["redeploy"]
 end
 
+docker_container 'nginx' do
+  tag 'latest'
+  port [ '80:80' ]
+  links [ 'kibana:kibana' ]
+  volumes [ "/var/config/nginx/nginx.conf:/etc/nginx/nginx.conf" ]
+  log_driver = "json-file"
+  log_opts "max-size=1g" #log_opts ["max-size=1g", "max-file=2", "labels=label1,label2", "env=evn1,env2"]
+  detach true
+  restart_policy 'always'
+  action ["redeploy"]
+end
 
 #TODO:
 #kibana: apt-get update && apt-get install apache2-utils  && htpasswd -b -c /etc/nginx/htpasswd.users kibanaadmin daihatsudomino

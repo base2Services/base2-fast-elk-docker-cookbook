@@ -1,4 +1,4 @@
-%w{logstash elasticsearch}.each do | dir |
+%w{logstash elasticsearch nginx}.each do | dir |
   directory "/var/config/#{dir}" do
     recursive true
   end
@@ -18,4 +18,8 @@ end
 
 file "/var/config/elasticsearch/docker-entrypoint.sh" do
   mode '0755'
+end
+
+template "/var/config/nginx/nginx.conf" do
+  source "nginx/nginx.conf.erb"
 end
