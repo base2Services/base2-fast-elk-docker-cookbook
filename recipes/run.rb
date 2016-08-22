@@ -2,13 +2,14 @@ directory node['base2-fast-elk-docker']['elasticsearch']['data_path'] do
   recursive true
 end
 
-execute "clear linked containers" do
-  command <<-EOF
-    docker ps -a | grep -q kibana && docker rm -f kibana
-    docker ps -a | grep -q logstash && docker rm -f logstash
-    docker ps -a | grep -q elasticsearch && docker rm -f elasticsearch
-    docker ps -a | grep -q nginx && docker rm -f nginx
-  EOF
+#don't f with linked containers and get hangs
+#do this in reverse
+%w{nginx kibana logstash elasticsearch}.each do | container |
+  execute "clear linked containers" do
+    command <<-EOF
+      docker ps -a | grep -q #{container} && docker rm -f #{container} || echo #{container} not there
+    EOF
+  end
 end
 
 # export ES_HEAP_SIZE
