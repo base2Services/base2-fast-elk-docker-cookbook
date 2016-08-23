@@ -27,7 +27,7 @@ docker_container 'elasticsearch' do
     "ES_HEAP_SIZE=#{node['base2-fast-elk-docker']['elasticsearch']['heapsize']}"
   ]
   volumes [
-    "/data/elasticsearch:/usr/share/elasticsearch/data",
+    "#{node['base2-fast-elk-docker']['elasticsearch']['data_path']}:/usr/share/elasticsearch/data",
     "/var/config/elasticsearch/elasticsearch.yml:/etc/elasticsearch/elasticsearch.yml",
     "/var/config/elasticsearch/docker-entrypoint.sh:/entrypoint.sh"
   ]
