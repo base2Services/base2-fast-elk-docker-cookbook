@@ -32,7 +32,9 @@ when 'rhel'
 end
 
 #refactor here for passwd
-kibana_password = "daihatsudomino"
+kibana_password = node['base2-fast-elk-docker']['kibana']['user']
+kibana_user = node['base2-fast-elk-docker']['kibana']['password']
+
 execute "mk passwd" do
-  command "sudo htpasswd -b -c /var/config/nginx/htpasswd.users kibanaadmin #{kibana_password}"
+  command "sudo htpasswd -b -c /var/config/nginx/htpasswd.users #{kibana_user} #{kibana_password}"
 end
