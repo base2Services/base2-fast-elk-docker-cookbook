@@ -132,3 +132,4 @@ cloud.aws.region: <%= node['base2-fast-elk-docker']['aws']['region'] %>
 discovery.type: ec2
 discovery.ec2.tag.<%= node['base2-fast-elk-docker']['elasticsearch']['discovery']['role_name'] %>: <%= node['base2-fast-elk-docker']['elasticsearch']['discovery']['role'] %>
 <% end %>
+network.host: 0.0.0.0
