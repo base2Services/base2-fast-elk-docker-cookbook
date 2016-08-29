@@ -2,6 +2,7 @@
 #create and mount this from a persistent volume
 directory node['base2-fast-elk-docker']['elasticsearch']['data_path'] do
   recursive true
+  mode '0777'
 end
 
 #don't f with linked containers and get hangs
@@ -27,8 +28,8 @@ docker_container 'elasticsearch' do
     "ES_HEAP_SIZE=#{node['base2-fast-elk-docker']['elasticsearch']['heapsize']}"
   ]
   volumes [
-    "#{node['base2-fast-elk-docker']['elasticsearch']['data_path']}:/usr/share/elasticsearch/data",
-    "/var/config/elasticsearch/elasticsearch.yml:/etc/elasticsearch/elasticsearch.yml",
+    "#{node['base2-fast-elk-docker']['elasticsearch']['data_path']}:#{node['base2-fast-elk-docker']['elasticsearch']['data_path']}",
+    "/var/config/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml",
     "/var/config/elasticsearch/docker-entrypoint.sh:/entrypoint.sh"
   ]
   log_driver = "json-file"
@@ -41,8 +42,8 @@ end
 docker_container 'logstash' do
   tag 'latest'
   command 'logstash -f /etc/logstash/conf.d/logstash.conf'
-  volumes [ '/var/config/logstash:/etc/logstash/conf.d' ]
-  port [ '5000:5000' ]
+  volumes [ '/var/config/logstash:/etc/logstash/conf.d/logstash.conf']
+  port [ '5000:5000', '3515:3515', '3516:3516', '3519:3519', '3520:3520', '3521:3521', '3522:3522', '3523:3523', '5140:5140' ]
   links [ 'elasticsearch:elasticsearch' ]
   log_driver = "json-file"
   log_opts "max-size=1g" #log_opts ["max-size=1g", "max-file=2", "labels=label1,label2", "env=evn1,env2"]
